@@ -15,3 +15,4 @@ while True:
         else:
             print "Closed"
     doorStatusPrev = doorStatus
+
