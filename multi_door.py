@@ -20,9 +20,9 @@ while True:
             print("Door 1: Closed")
     if door2Status != door2StatusPrev:
         if door2Status:
-            print "Door 2: Open"
+            print("Door 2: Open")
         else:
-            print "Door 2: Closed"
+            print("Door 2: Closed")
     door1StatusPrev = door1Status
     door2StatusPrev = door2Status
 
