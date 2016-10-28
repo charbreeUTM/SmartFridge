@@ -2,7 +2,7 @@ import RPi.GPIO as io
 
 io.setmode(io.BCM) 
 doorPin = 17 
-io.setup(doorPin, io.IN) 
+io.setup(doorPin, io.IN, pull_up_down=io.PUD_UP) 
 
 doorStatusPrev = -1
 

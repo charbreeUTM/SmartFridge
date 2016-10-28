@@ -3,8 +3,8 @@ import RPi.GPIO as io
 io.setmode(io.BCM) 
 doorPin1 = 17
 doorPin2 = 18
-io.setup(doorPin1, io.IN)
-io.setup(doorPin2, io.IN)
+io.setup(doorPin1, io.IN, pull_up_down=io.PUD_UP)
+io.setup(doorPin2, io.IN, pull_up_down=io.PUD_UP)
 
 door1StatusPrev = -1
 door2StatusPrev = -1

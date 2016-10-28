@@ -1,7 +1,3 @@
-
-
-
-
 '''
 /*
  * Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
@@ -50,8 +46,8 @@ doorPin2 = 18
 door1StatusPrev = '2'
 door2StatusPrev = '2'
 
-io.setup(doorPin1, io.IN)
-io.setup(doorPin2, io.IN)
+io.setup(doorPin1, io.IN, pull_up_down=io.PUD_UP)
+io.setup(doorPin2, io.IN, pull_up_down=io.PUD_UP)
 
 def read_doors():
     ### A 1 means door is open, a 0 means door is closed. ###
