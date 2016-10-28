@@ -11,8 +11,8 @@ while True:
     doorStatus = io.input(doorPin)
     if doorStatus != doorStatusPrev:
         if doorStatus:
-            print "Open"
+            print("Open")
         else:
-            print "Closed"
+            print("Closed")
     doorStatusPrev = doorStatus
 

@@ -51,7 +51,7 @@ def read_temp():
         return {'sensor1':temp_f_1, 'sensor2':temp_f_2}
 	
 while True:
-        temps = read_temp()
-        print "tmp1:",temps['sensor1'],"F"
-        print "tmp2:",temps['sensor2'],"F"
-	time.sleep(1)
+    temps = read_temp()
+    print("tmp1: ",temps['sensor1']," F")
+    print("tmp2: ",temps['sensor2']," F")
+    time.sleep(1)
