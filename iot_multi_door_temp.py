@@ -258,7 +258,7 @@ while True:
         door1StatusPrev = doors['door1']
         door1LastChange = loopCount
         if door1Alarm and (doors['door2'] == 0):
-            JSONPayload += ',"door1Alarm";' + '"Door 1 Normal."'
+            JSONPayload += ',"door1Alarm":' + '"Door 1 Normal."'
             door1Alarm = 0
         
     if doors['door2'] != door2StatusPrev:
@@ -266,7 +266,7 @@ while True:
         door2StatusPrev = doors['door2']
         door2LastChange = loopCount
         if door2Alarm and (doors['door2'] == 0):
-            JSONPayload += ',"door2Alarm";' + '"Door 2 Normal."'
+            JSONPayload += ',"door2Alarm":' + '"Door 2 Normal."'
             door2Alarm = 0
 
     # Door sensor 1: Check for alarm state.
