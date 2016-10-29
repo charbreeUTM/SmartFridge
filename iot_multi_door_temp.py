@@ -226,7 +226,7 @@ while True:
     doors = read_doors()
     JSONPayload = '{"state":{"reported":{"temp1":' + str(temps['sensor1']) + ',"temp2":' + str(temps['sensor2'])
 
-    if (temps['sensor1'] > 85) and (temp1Alarm == 0):
+    if (temps['sensor1'] > tempLimit) and (temp1Alarm == 0):
         JSONPayload += ',"temp1Alarm":' + '"Temp 1 Alarm! Temp: ' + str(temps['sensor1']) + 'F"'
         if temp1AlarmTime == -1:
             temp1AlarmTime = loopCount
