@@ -215,12 +215,15 @@ myAWSIoTMQTTClient.connect()
 #myAWSIoTMQTTClient.subscribe("sdk/test/Python", 1, customCallback)
 time.sleep(2)
 
-# Publish to the same topic in a loop forever
 loopCount = 0
 temp1Alarm = 0
 temp2Alarm = 0
+door1Alarm = 0
+door2Alarm = 0
 temp1AlarmTime = -1
 temp2AlarmTime = -1
+door1LastChange = 0
+door2LastChange = 0
 
 # Change the number in the strings below to a different number for each Pi.
 while True:
@@ -253,10 +256,29 @@ while True:
     if doors['door1'] != door1StatusPrev:
         JSONPayload += ',"door1":' + str(doors['door1'])
         door1StatusPrev = doors['door1']
+        door1LastChange = loopCount
+        if door1Alarm (doors['door2'] == 0):
+            JSONPayload += ',"door1Alarm";' + '"Door 1 Normal."'
+            door1Alarm = 0
         
     if doors['door2'] != door2StatusPrev:
         JSONPayload += ',"door2":' + str(doors['door2'])
         door2StatusPrev = doors['door2']
+        door2LastChange = loopCount
+        if door2Alarm and (doors['door2'] == 0):
+            JSONPayload += ',"door2Alarm";' + '"Door 2 Normal."'
+            door2Alarm = 0
+
+    # Door sensor 1: Check for alarm state.
+    if ((loopCount - door1LastChange) % 5 == 0) and door1Alarm == 1):
+        JSONPayload += ',"door1Alarm":' + '"Door 1 Alarm! Door 1 has been open for an extended period of time."'
+        door1Alarm = 1
+
+    # Door sensor 2: Check for alarm state.
+    if ((loopCount - door2LastChange) % 5 == 0) and door2Alarm == 1):
+        JSONPayload += ',"door2Alarm":' + '"Door 2 Alarm! Door 2 has been open for an extended period of time."'
+        door2Alarm = 1
+    
     JSONPayload += '}}}'
 
     # Send message to AWS.
