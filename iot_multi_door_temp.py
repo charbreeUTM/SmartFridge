@@ -238,7 +238,7 @@ while True:
             temp1AlarmTime = loopCount
         temp1Alarm = 1
     elif (temps['sensor1'] < tempLimit) and (temp1Alarm == 1):
-        JSONPayload += ',"temp1Alarm":' + '"Temp 1 normal. Temp: ' + str(temps['sensor1']) + 'F"'
+        JSONPayload += ',"temp1Alarm":' + '"Temp 1 Normal. Temp: ' + str(temps['sensor1']) + 'F"'
         temp1Alarm = 0
         temp1AlarmTime = -1
 
@@ -249,7 +249,7 @@ while True:
             temp2AlarmTime = loopCount
         temp2Alarm = 1
     elif (temps['sensor2'] < tempLimit) and (temp2Alarm == 1):
-        JSONPayload += ',"temp2Alarm":' + '"Temp 2 normal. Temp: ' + str(temps['sensor2']) + 'F"'
+        JSONPayload += ',"temp2Alarm":' + '"Temp 2 Normal. Temp: ' + str(temps['sensor2']) + 'F"'
         temp2Alarm = 0
         temp2AlarmTime = -1
             
@@ -257,7 +257,7 @@ while True:
         JSONPayload += ',"door1":' + str(doors['door1'])
         door1StatusPrev = doors['door1']
         door1LastChange = loopCount
-        if door1Alarm (doors['door2'] == 0):
+        if door1Alarm and (doors['door2'] == '0'):
             JSONPayload += ',"door1Alarm";' + '"Door 1 Normal."'
             door1Alarm = 0
         
@@ -265,7 +265,7 @@ while True:
         JSONPayload += ',"door2":' + str(doors['door2'])
         door2StatusPrev = doors['door2']
         door2LastChange = loopCount
-        if door2Alarm and (doors['door2'] == 0):
+        if door2Alarm and (doors['door2'] == '0'):
             JSONPayload += ',"door2Alarm";' + '"Door 2 Normal."'
             door2Alarm = 0
 
@@ -289,7 +289,7 @@ while True:
     # Send another notification after a certain number of executions.
     if ((loopCount - temp1AlarmTime) % 15 == 0):
         temp1Alarm = 0
-    elif ((loopCount - temp2AlarmTime) % 15 == 0):
+    if ((loopCount - temp2AlarmTime) % 15 == 0):
         temp2Alarm = 0
         
     #time.sleep(1)
