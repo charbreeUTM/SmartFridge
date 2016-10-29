@@ -231,10 +231,10 @@ while True:
         if temp1AlarmTime == -1:
             temp1AlarmTime = loopCount
         temp1Alarm = 1
-        elif (temps['sensor1'] < tempLimit) and (temp1Alarm == 1):
-            JSONPayload += ',"temp1Alarm":' + '"Temp 1 normal. Temp: ' + str(temps['sensor1']) + 'F"'
-            temp1Alarm = 0
-            temp1AlarmTime = -1
+    elif (temps['sensor1'] < tempLimit) and (temp1Alarm == 1):
+        JSONPayload += ',"temp1Alarm":' + '"Temp 1 normal. Temp: ' + str(temps['sensor1']) + 'F"'
+        temp1Alarm = 0
+        temp1AlarmTime = -1
             
     if doors['door1'] != door1StatusPrev:
         JSONPayload += ',"door1":' + str(doors['door1'])
