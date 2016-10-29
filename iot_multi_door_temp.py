@@ -218,7 +218,9 @@ time.sleep(2)
 # Publish to the same topic in a loop forever
 loopCount = 0
 temp1Alarm = 0
+temp2Alarm = 0
 temp1AlarmTime = -1
+temp2AlarmTime = -1
 
 # Change the number in the strings below to a different number for each Pi.
 while True:
@@ -226,6 +228,7 @@ while True:
     doors = read_doors()
     JSONPayload = '{"state":{"reported":{"temp1":' + str(temps['sensor1']) + ',"temp2":' + str(temps['sensor2'])
 
+    # Temp sensor 1: Check for alarm state.
     if (temps['sensor1'] > tempLimit) and (temp1Alarm == 0):
         JSONPayload += ',"temp1Alarm":' + '"Temp 1 Alarm! Temp: ' + str(temps['sensor1']) + 'F"'
         if temp1AlarmTime == -1:
@@ -235,6 +238,17 @@ while True:
         JSONPayload += ',"temp1Alarm":' + '"Temp 1 normal. Temp: ' + str(temps['sensor1']) + 'F"'
         temp1Alarm = 0
         temp1AlarmTime = -1
+
+    # Temp sensor 2: Check for alarm state.
+    if (temps['sensor2'] > tempLimit) and (temp2Alarm == 0):
+        JSONPayload += ',"temp2Alarm":' + '"Temp 2 Alarm! Temp: ' + str(temps['sensor2']) + 'F"'
+        if temp2AlarmTime == -1:
+            temp2AlarmTime = loopCount
+        temp2Alarm = 1
+    elif (temps['sensor2'] < tempLimit) and (temp2Alarm == 1):
+        JSONPayload += ',"temp2Alarm":' + '"Temp 2 normal. Temp: ' + str(temps['sensor2']) + 'F"'
+        temp2Alarm = 0
+        temp2AlarmTime = -1
             
     if doors['door1'] != door1StatusPrev:
         JSONPayload += ',"door1":' + str(doors['door1'])
@@ -245,8 +259,15 @@ while True:
         door2StatusPrev = doors['door2']
     JSONPayload += '}}}'
 
+    # Send message to AWS.
     myAWSIoTMQTTClient.publish("$aws/things/raspberry-pi-1/shadow/update", JSONPayload, 1)
+
     loopCount += 1
+
+    # Send another notification after a certain number of executions.
     if ((loopCount - temp1AlarmTime) % 15 == 0):
         temp1Alarm = 0
+    elif ((loopCount - temp2AlarmTime) % 15 == 0):
+        temp2Alarm = 0
+        
     #time.sleep(1)
