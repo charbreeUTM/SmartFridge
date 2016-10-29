@@ -219,16 +219,21 @@ loopCount = 0
 # Change the number in the strings below to a different number for each Pi.
 while True:
     temps = read_temp()
-    myAWSIoTMQTTClient.publish("pi/001/temp1", str(temps['sensor1']), 1)
-    myAWSIoTMQTTClient.publish("pi/001/temp2", str(temps['sensor2']), 1)
     doors = read_doors()
+    JSONPayload = '{"state":{"reported":{"temp1":' + str(temps['sensor1']) + ',"temp2":' + str(temps['sensor2'])
+    #myAWSIoTMQTTClient.publish("pi/001/temp1", str(temps['sensor1']), 1)
+    #myAWSIoTMQTTClient.publish("pi/001/temp2", str(temps['sensor2']), 1)
     if doors['door1'] != door1StatusPrev:
         #publish to aws
-        myAWSIoTMQTTClient.publish("pi/001/door1", doors['door1'], 1)
+        JSONPayload += ',"door1":' + str(doors['door1'])
+        #myAWSIoTMQTTClient.publish("pi/001/door1", doors['door1'], 1)
         door1StatusPrev = doors['door1']
     if doors['door2'] != door2StatusPrev:
         #publish to aws
-        myAWSIoTMQTTClient.publish("pi/001/door2", doors['door2'], 1)
+        JSONPayload += ',"door2":' + str(doors['door2'])
+        #myAWSIoTMQTTClient.publish("pi/001/door2", doors['door2'], 1)
         door2StatusPrev = doors['door2']
+    JSONPayload += '}}}'
+    myAWSIoTMQTTClient.publish("$aws/things/raspberry-pi-1/shadow/update", JSONPayload, 1)
     loopCount += 1
     time.sleep(1)
