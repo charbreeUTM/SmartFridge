@@ -270,12 +270,12 @@ while True:
             door2Alarm = 0
 
     # Door sensor 1: Check for alarm state.
-    if ((loopCount - door1LastChange) % 5 == 0) and (door1Alarm == 1):
+    if ((loopCount - door1LastChange) % 5 == 0) and (doors['door1'] == 1):
         JSONPayload += ',"door1Alarm":' + '"Door 1 Alarm! Door 1 has been open for an extended period of time."'
         door1Alarm = 1
 
     # Door sensor 2: Check for alarm state.
-    if ((loopCount - door2LastChange) % 5 == 0) and (door2Alarm == 1):
+    if ((loopCount - door2LastChange) % 5 == 0) and (doors['door2'] == 1):
         JSONPayload += ',"door2Alarm":' + '"Door 2 Alarm! Door 2 has been open for an extended period of time."'
         door2Alarm = 1
     
